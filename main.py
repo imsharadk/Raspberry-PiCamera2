@@ -5,7 +5,6 @@ from time import sleep
 from datetime import datetime, date
 from PIL import ImageTk, Image
 from threading import Thread
-from PyQt6.QtCore import QThread
 import sys
 from multiprocessing import Process
 
@@ -66,11 +65,9 @@ def phase_map():
     
     mask = np.zeros((2000, 3000), dtype=complex)
     mask[960:1050,1850:1920]  = fftshift(fft2(cv.cvtColor(cv.imread('image_phase.jpg'),cv.COLOR_BGR2GRAY)))[960:1050,1850:1920]
-    mask_value = mask[960:1050,1850:1920]
     mask_central = np.zeros_like(mask)
     mask_central[985:1015,1475:1525]  = mask[968:998,1864:1914]
     return unwrap_phase(np.angle(ifft2(ifftshift(mask_central))))
-    #return unwrap_phase(np.angle(ifft2(ifftshift(mask_value))))
     
 def fourier_view():
     import matplotlib.pyplot as plt
